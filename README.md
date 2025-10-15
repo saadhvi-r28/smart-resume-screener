@@ -64,7 +64,7 @@ An intelligent resume screening application that uses Mistral AI to parse resume
 
 ```bash
 # Navigate to project directory
-cd /Users/saadhviram/Documents/College/Companies/Unthinkable/smart-resume-screener
+cd ../smart-resume-screener
 
 # Add your Mistral API key to backend/.env
 nano backend/.env
