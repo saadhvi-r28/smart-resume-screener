@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Resume Screener - AI-Powered Recruitment</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Styles -->
+    <link href="styles-modern.css" rel="stylesheet">
+    
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 0 2rem; display: flex; justify-content: space-between; align-items: center;">
+            <div class="navbar-brand">
+                <i class="fas fa-brain"></i>
+                <span>Smart Resume Screener</span>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <a class="nav-link active" href="#" data-section="dashboard">
+                    <i class="fas fa-home"></i> Dashboard
+                </a>
+                <a class="nav-link" href="#" data-section="resumes">
+                    <i class="fas fa-file-alt"></i> Resumes
+                </a>
+                <a class="nav-link" href="#" data-section="jobs">
+                    <i class="fas fa-briefcase"></i> Jobs
+                </a>
+                <a class="nav-link" href="#" data-section="matches">
+                    <i class="fas fa-chart-line"></i> Matches
+                </a>
+                
+                <!-- Theme Toggle -->
+                <div class="theme-toggle" id="themeToggle">
+                    <i class="fas fa-moon" id="themeIcon"></i>
+                    <span id="themeText">Dark</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <div class="container" style="max-width: 1400px; margin: 0 auto; padding: 2rem;">
+        
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="content-section" style="display: block;">
+            <div class="fade-in">
+                <h1 class="text-gradient" style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">
+                    <i class="fas fa-tachometer-alt"></i> Dashboard
+                </h1>
+                
+                <!-- Stats Cards -->
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 2rem;">
+                    <div class="stat-card">
+                        <div class="stat-icon"><i class="fas fa-file-alt"></i></div>
+                        <div class="stat-number" id="total-resumes">0</div>
+                        <div class="stat-label">Total Resumes</div>
+                    </div>
+                    
+                    <div class="stat-card" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                        <div class="stat-icon"><i class="fas fa-briefcase"></i></div>
+                        <div class="stat-number" id="total-jobs">0</div>
+                        <div class="stat-label">Active Jobs</div>
+                    </div>
+                    
+                    <div class="stat-card" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                        <div class="stat-icon"><i class="fas fa-chart-line"></i></div>
+                        <div class="stat-number" id="total-matches">0</div>
+                        <div class="stat-label">Matches Found</div>
+                    </div>
+                    
+                    <div class="stat-card" style="background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);">
+                        <div class="stat-icon"><i class="fas fa-star"></i></div>
+                        <div class="stat-number" id="avg-match">0%</div>
+                        <div class="stat-label">Avg Match Score</div>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div class="card-header">
+                        <i class="fas fa-bolt"></i> Quick Actions
+                    </div>
+                    <div class="card-body">
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                            <button class="btn btn-primary" onclick="showSection('resumes')">
+                                <i class="fas fa-upload"></i> Upload Resume
+                            </button>
+                            <button class="btn btn-success" onclick="showSection('jobs')">
+                                <i class="fas fa-plus"></i> Create Job
+                            </button>
+                            <button class="btn" style="background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); color: white;" onclick="showSection('matches')">
+                                <i class="fas fa-search"></i> Find Matches
+                            </button>
+                            <button class="btn btn-outline" onclick="refreshStats()">
+                                <i class="fas fa-sync-alt"></i> Refresh Data
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-clock"></i> Recent Activity
+                    </div>
+                    <div class="card-body">
+                        <div id="recent-activity" style="color: var(--text-secondary); text-align: center; padding: 2rem;">
+                            <i class="fas fa-info-circle" style="font-size: 2rem; opacity: 0.5;"></i>
+                            <p style="margin-top: 1rem;">No recent activity. Start by uploading a resume or creating a job!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Resumes Section -->
+        <section id="resumes-section" class="content-section" style="display: none;">
+            <div class="fade-in">
+                <h1 class="text-gradient" style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">
+                    <i class="fas fa-file-alt"></i> Resumes
+                </h1>
+
+                <!-- Upload Area -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div class="card-header">
+                        <i class="fas fa-cloud-upload-alt"></i> Upload New Resume
+                    </div>
+                    <div class="card-body">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon"><i class="fas fa-file-upload"></i></div>
+                            <h3 style="margin-bottom: 0.5rem; color: var(--text-primary);">Drop your resume here</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 1rem;">or click to browse</p>
+                            <p style="color: var(--text-tertiary); font-size: 0.9rem;">Supports PDF, TXT, DOC, DOCX (Max 10MB)</p>
+                            <input type="file" id="resumeFile" accept=".pdf,.txt,.doc,.docx" style="display: none;">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumes List -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-list"></i> All Resumes
+                    </div>
+                    <div class="card-body">
+                        <div id="resumes-list">
+                            <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                                <div class="spinner" style="margin: 0 auto 1rem;"></div>
+                                <p>Loading resumes...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Jobs Section -->
+        <section id="jobs-section" class="content-section" style="display: none;">
+            <div class="fade-in">
+                <h1 class="text-gradient" style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">
+                    <i class="fas fa-briefcase"></i> Job Descriptions
+                </h1>
+
+                <!-- Create Job Form -->
+                <div class="card" style="margin-bottom: 2rem;">
+                    <div class="card-header">
+                        <i class="fas fa-plus-circle"></i> Create New Job
+                    </div>
+                    <div class="card-body">
+                        <form id="createJobForm">
+                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                                <div class="form-group">
+                                    <label class="form-label">Job Title *</label>
+                                    <input type="text" class="form-control" id="jobTitle" placeholder="e.g., Senior Full Stack Developer" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Company *</label>
+                                    <input type="text" class="form-control" id="jobCompany" placeholder="e.g., Tech Corp Inc." required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Experience Level *</label>
+                                    <select class="form-control" id="jobExperienceLevel" required>
+                                        <option value="">Select level</option>
+                                        <option value="entry">Entry Level</option>
+                                        <option value="mid">Mid Level</option>
+                                        <option value="senior">Senior Level</option>
+                                        <option value="executive">Executive</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label">Location</label>
+                                    <input type="text" class="form-control" id="jobLocation" placeholder="e.g., Remote / New York, NY">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Job Description * (minimum 50 characters)</label>
+                                <textarea class="form-control" id="jobDescription" rows="4" placeholder="Describe the role, responsibilities, and what you're looking for..." required minlength="50"></textarea>
+                                <small style="color: var(--text-secondary); font-size: 0.75rem;">Minimum 50 characters required</small>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Required Skills (comma-separated) *</label>
+                                <input type="text" class="form-control" id="jobSkills" placeholder="e.g., JavaScript, React, Node.js, MongoDB" required>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Requirements (one per line)</label>
+                                <textarea class="form-control" id="jobRequirements" rows="4" placeholder="- 5+ years of experience\n- Strong problem-solving skills\n- Bachelor's degree in CS"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="btn btn-success" style="width: 100%;">
+                                <i class="fas fa-plus"></i> Create Job Posting
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Jobs List -->
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-list"></i> All Jobs
+                    </div>
+                    <div class="card-body">
+                        <div id="jobs-list">
+                            <div style="text-align: center; padding: 2rem; color: var(--text-secondary);">
+                                <div class="spinner" style="margin: 0 auto 1rem;"></div>
+                                <p>Loading jobs...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Matches Section -->
+        <section id="matches-section" class="content-section" style="display: none;">
+            <div class="fade-in">
+                <h1 class="text-gradient" style="font-size: 2.5rem; font-weight: 800; margin-bottom: 2rem;">
+                    <i class="fas fa-chart-line"></i> Candidate Matches
+                </h1>
+
+                <div class="card">
+                    <div class="card-header">
+                        <i class="fas fa-search"></i> Find Best Matches
+                    </div>
+                    <div class="card-body">
+                        <div id="matches-list">
+                            <div style="text-align: center; padding: 3rem; color: var(--text-secondary);">
+                                <i class="fas fa-users-cog" style="font-size: 4rem; opacity: 0.3; margin-bottom: 1rem;"></i>
+                                <h3>AI-Powered Matching</h3>
+                                <p>Upload resumes and create jobs to see intelligent candidate matches with detailed analysis and recommendations.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- Notification Container -->
+    <div id="notification-container"></div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="spinner-overlay" style="display: none;">
+        <div>
+            <div class="spinner" style="margin: 0 auto 1rem;"></div>
+            <p style="color: white; font-weight: 600;">Processing...</p>
+        </div>
+    </div>
+
+    <!-- Resume Detail Modal -->
+    <div id="resumeModal" class="modal-overlay" style="display: none;">
+        <div class="modal-content" style="background: var(--bg-primary); border-radius: 16px; max-width: 900px; width: 90%; max-height: 85vh; overflow: hidden; box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);">
+            <div class="modal-header" style="background: linear-gradient(135deg, var(--primary-color), var(--info-color)); color: white; padding: 2rem; border-bottom: 2px solid var(--border-color);">
+                <h2 id="modalTitle" style="margin: 0; color: white; font-size: 1.75rem; font-weight: 700;">Resume Details</h2>
+                <button class="modal-close" onclick="closeResumeModal()" style="background: rgba(255, 255, 255, 0.2); border: none; color: white; font-size: 1.5rem; cursor: pointer; padding: 0.5rem; border-radius: 50%; width: 44px; height: 44px;">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody" style="padding: 2rem; overflow-y: auto; max-height: calc(85vh - 120px); background: var(--bg-primary);">
+                <!-- Content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Match Details Modal -->
+    <div id="matchDetailsModal" class="modal" style="display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5);">
+        <div class="modal-content" style="position: relative; background-color: var(--bg-primary); margin: 2% auto; padding: 0; width: 90%; max-width: 800px; border-radius: 12px; box-shadow: 0 8px 32px rgba(0,0,0,0.3); max-height: 90vh; overflow-y: auto;">
+            <div class="modal-header" style="padding: 1.5rem; border-bottom: 1px solid var(--border-color); position: sticky; top: 0; background: var(--bg-primary); border-radius: 12px 12px 0 0; z-index: 1001;">
+                <h2 style="margin: 0; color: var(--text-primary); display: flex; align-items: center; gap: 0.5rem;">
+                    <i class="fas fa-analytics"></i> Match Analysis
+                </h2>
+                <button onclick="closeMatchDetailsModal()" style="position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; color: var(--text-secondary); cursor: pointer; padding: 0.5rem; border-radius: 50%; transition: all 0.2s ease;" onmouseover="this.style.background='var(--bg-secondary)'" onmouseout="this.style.background='none'">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="matchDetailsBody" class="modal-body" style="padding: 2rem;">
+                <!-- Content will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script src="app-modern.js"></script>
+</body>
+</html>
+```
