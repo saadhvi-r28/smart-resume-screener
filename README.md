@@ -385,8 +385,6 @@ MIT License - see LICENSE file for details.
 
 For questions or support:
 - Create an issue on GitHub
-- Email: support@resume-screener.com
-- Documentation: [Wiki](./wiki)
 
 ---
 
