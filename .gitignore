@@ -11,6 +11,11 @@ yarn-error.log*
 .env.test.local
 .env.production.local
 *.env
+!.env.production
+
+# Vercel
+.vercel
+.vercel/*
 
 # Logs
 logs
