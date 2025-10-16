@@ -78,7 +78,7 @@ nano backend/.env
 
 1. **Clone the repository:**
 ```bash
-git clone <repository-url>
+git clone https://github.com/saadhvi-r28/smart-resume-screener.git
 cd smart-resume-screener
 ```
 
@@ -93,7 +93,7 @@ cp .env.example .env
 3. **Configure Environment:**
 ```bash
 # Required environment variables
-OPENAI_API_KEY=your_openai_api_key_here
+MISTRAL_API_KEY=your_openai_api_key_here
 MONGODB_URI=mongodb://localhost:27017/smart-resume-screener
 PORT=3000
 ```
@@ -135,7 +135,6 @@ smart-resume-screener/
 │   ├── index.html           # Modern UI with theme toggle
 │   ├── app-modern.js        # Interactive JavaScript with API integration
 │   ├── styles-modern.css    # Theme-aware CSS with animations
-│   ├── README.md            # Frontend documentation
 │   ├── *.backup             # Backup files
 │   └── package.json
 └── README.md
