@@ -93,7 +93,7 @@ cp .env.example .env
 3. **Configure Environment:**
 ```bash
 # Required environment variables
-MISTRAL_API_KEY=your_openai_api_key_here
+MISTRAL_API_KEY=your_mistral_api_key_here
 MONGODB_URI=mongodb://localhost:27017/smart-resume-screener
 PORT=3000
 ```
@@ -108,8 +108,8 @@ cd backend
 npm run dev
 
 # Start frontend (in another terminal)
-cd frontend
-npm run dev
+cd smart-resume-screener
+./start.sh
 ```
 
 5. **Access Application:**
